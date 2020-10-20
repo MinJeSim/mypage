@@ -13,7 +13,6 @@ import java.util.Optional;
 @Service
 public class MypageViewHandler {
 
-
     @Autowired
     private MypageRepository mypageRepository;
 
@@ -21,15 +20,33 @@ public class MypageViewHandler {
     public void whenMemberJoined_then_CREATE_1 (@Payload MemberJoined memberJoined) {
         try {
             if (memberJoined.isMe()) {
+                System.out.println("testsetsetsetetsetest1234");
                 // view 객체 생성
                 Mypage mypage = new Mypage();
                 // view 객체에 이벤트의 Value 를 set 함
                 mypage.setMemberId(memberJoined.getMemberId());
                 mypage.setNickname(memberJoined.getNickname());
-                mypage.setPhoneNo(memberJoined.getMdnNo());
+                mypage.setPhoneNo(memberJoined.getPhoneNo());
                 mypage.setMemberStatus(memberJoined.getMemberStatus());
                 // view 레파지 토리에 save
                 mypageRepository.save(mypage);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenMemberStateChanged_then_CREATE_1 (@Payload MemberStatusChanged memberStatusChanged) {
+        try {
+            if (memberStatusChanged.isMe()) {
+                List<Mypage> mypageList = mypageRepository.findByMemberId(memberStatusChanged.getMemberId());
+                for(Mypage mypage : mypageList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setMemberStatus(memberStatusChanged.getMemberStatus());
+                    // view 레파지 토리에 save
+                    mypageRepository.save(mypage);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

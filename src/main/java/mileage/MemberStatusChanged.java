@@ -1,11 +1,10 @@
+
 package mileage;
 
-public class MemberJoined extends AbstractEvent {
+public class MemberStatusChanged extends AbstractEvent {
 
     private Long id;
     private Long memberId;
-    private String phoneNo;
-    private String nickname;
     private String memberStatus;
 
     public Long getId() {
@@ -22,26 +21,11 @@ public class MemberJoined extends AbstractEvent {
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
     public String getMemberStatus() {
         return memberStatus;
     }
 
     public void setMemberStatus(String memberStatus) {
         this.memberStatus = memberStatus;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
     }
 }
