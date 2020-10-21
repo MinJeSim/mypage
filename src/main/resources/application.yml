@@ -1,5 +1,11 @@
 server:
   port: 8080
+
+superuser:
+  userId: ${_SUPER_UID:admin123}
+---
+
+spring:
 ---
 
 spring:
